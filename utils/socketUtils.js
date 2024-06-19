@@ -6,6 +6,7 @@ exports.sio = (server) => {
     cors: {
       origin: "*",
     },
+    maxHttpBufferSize: 10e12, // Set maximum payload size to 10MB
   });
 
   return io;
@@ -29,8 +30,8 @@ exports.connection = (io) => {
 
         console.log(`Connected sockets (excluding sender): ${connectedSockets.length}`);
 
-        if (connectedSockets.length >= 2) {
-          const randomSocketIds = chooseRandom(connectedSockets, 2);
+        if (connectedSockets.length >= 1) {
+          const randomSocketIds = chooseRandom(connectedSockets, 1);
           const randomSockets = randomSocketIds.map(id => io.sockets.sockets.get(id));
 
           randomSockets.forEach((randomSocket) => {
